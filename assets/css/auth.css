@@ -1,0 +1,541 @@
+/* Auth Pages Styling */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --text-light: #ecf0f1;
+    --text-dark: #2c3e50;
+    --bg-light: #f8f9fa;
+    --border-color: #e9ecef;
+}
+
+.auth-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #547291 0%, #3498db 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.auth-wrapper {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+    min-height: 700px;
+}
+
+/* Branding Section */
+.auth-branding {
+    flex: 1;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-content {
+    max-width: 400px;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.brand-logo i {
+    color: var(--secondary-color);
+    margin-right: 0.5rem;
+    font-size: 2rem;
+}
+
+.brand-content h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.brand-content p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.feature-list {
+    margin-top: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.feature-item i {
+    color: var(--secondary-color);
+    margin-right: 1rem;
+    font-size: 1.1rem;
+}
+
+.feature-item span {
+    font-size: 1rem;
+}
+
+/* Form Section */
+.auth-form-container {
+    flex: 1;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* Auth Form */
+.auth-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-label i {
+    margin-right: 0.5rem;
+    color: var(--secondary-color);
+    width: 16px;
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-control.is-invalid {
+    border-color: var(--accent-color);
+}
+
+.password-input-group {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Form Options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.forgot-password {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Auth Button */
+.btn-auth {
+    width: 100%;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    min-height: 50px;
+}
+
+.btn-text, .btn-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-loading i {
+    margin-right: 0.5rem;
+}
+
+/* Divider */
+.auth-divider {
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.auth-divider span {
+    background: white;
+    padding: 0 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Social Login */
+.social-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-google, .btn-microsoft {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-weight: 600;
+    background: white;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover, .btn-microsoft:hover {
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.btn-google i {
+    color: #db4437;
+    margin-right: 0.5rem;
+}
+
+.btn-microsoft i {
+    color: #0078d4;
+    margin-right: 0.5rem;
+}
+
+/* Auth Footer */
+.auth-footer {
+    text-align: center;
+}
+
+.auth-footer p {
+    color: #666;
+    margin: 0;
+}
+
+.auth-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-wrapper {
+        flex-direction: column;
+        min-height: auto;
+    }
+    
+    .auth-branding {
+        padding: 40px 20px;
+    }
+    
+    .auth-form-container {
+        padding: 40px 20px;
+    }
+    
+    .brand-content h1 {
+        font-size: 2rem;
+    }
+    
+    .social-login {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-form-wrapper {
+    animation: fadeIn 0.6s ease;
+}
+
+/* Register Page Specific Styles */
+
+/* Testimonial */
+.testimonial {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.testimonial-content p {
+    font-style: italic;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.testimonial-author strong {
+    display: block;
+    font-weight: 600;
+}
+
+.testimonial-author span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Password Strength Meter */
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-bar {
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.strength-fill.weak {
+    width: 33%;
+    background: var(--accent-color);
+}
+
+.strength-fill.medium {
+    width: 66%;
+    background: var(--warning-color);
+}
+
+.strength-fill.strong {
+    width: 100%;
+    background: var(--success-color);
+}
+
+.strength-text {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Terms Link */
+.terms-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.terms-link:hover {
+    text-decoration: underline;
+}
+
+/* Form Check Validation */
+.form-check-input:invalid {
+    border-color: var(--accent-color);
+}
+
+.form-check-input:valid {
+    border-color: var(--success-color);
+}
+
+/* Progress Steps (Optional) */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--border-color);
+    z-index: 1;
+}
+
+.progress-step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    flex: 1;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--border-color);
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.progress-step.active .step-number {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.progress-step.completed .step-number {
+    background: var(--success-color);
+    color: white;
+}
+
+.step-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.progress-step.active .step-label {
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+/* Multi-step form sections */
+.form-section {
+    display: none;
+}
+
+.form-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Success State */
+.form-control.is-valid {
+    border-color: var(--success-color);
+}
+
+/* Enhanced responsive design for register form */
+@media (max-width: 768px) {
+    .auth-form-wrapper {
+        padding: 0 10px;
+    }
+    
+    .testimonial {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+}
+
+/* Animation for form sections */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.form-section.active {
+    animation: slideIn 0.5s ease;
+}
