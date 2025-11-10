@@ -56,7 +56,7 @@
                             <i class="fas fa-sign-in-alt"></i>
                             Login to Dashboard
                         </a>
-                        <a href="/smart_core_erp/auth/register" class="btn btn-outline-secondary btn-lg">
+                        <a href="/smart_core_erp/register" class="btn btn-outline-secondary btn-lg">
                             <i class="fas fa-user-plus"></i>
                             Get Started Free
                         </a>
@@ -283,7 +283,7 @@
                     <h2>Ready to Transform Your Business?</h2>
                     <p class="lead">Join thousands of businesses using Smart-Core ERP</p>
                     <div class="cta-buttons">
-                        <a href="/smart_core_erp/auth/register" class="btn btn-primary btn-lg">
+                        <a href="/smart_core_erp/register" class="btn btn-primary btn-lg">
                             <i class="fas fa-rocket"></i>
                             Start Your Free Trial
                         </a>
