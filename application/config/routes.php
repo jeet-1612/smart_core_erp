@@ -57,3 +57,12 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'auth/login';
 $route['register'] = 'auth/register';
 $route['forgot-password'] = 'auth/forgot_password';
+$route['logout'] = 'auth/logout';
+
+// Auth Process Routes
+$route['auth/login'] = 'auth/process_login';
+$route['auth/register'] = 'auth/process_register';
+$route['auth/ajax_register'] = 'auth/ajax_register';
+
+// Dashboard Route (we'll create this next)
+$route['dashboard'] = 'dashboard';

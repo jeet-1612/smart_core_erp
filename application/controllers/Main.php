@@ -5,8 +5,7 @@ class Main extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        // Manual helper load karo
-        $this->load->helper('url');
+        $this->load->helper('url'); // URL helper manually load karo
     }
     
     public function index() {

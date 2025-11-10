@@ -1,4 +1,4 @@
-// Register Page Specific JavaScript
+// Auth Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('registerForm');
     const loginForm = document.getElementById('loginForm');
@@ -8,8 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeRegisterPage();
     }
     
-    // Common auth functionality
-    initializeAuthCommon();
+    // Login page specific elements
+    if (loginForm) {
+        initializeLoginPage();
+    }
 });
 
 // Initialize register page
@@ -85,17 +87,7 @@ function initializeRegisterPage() {
     }
 }
 
-// Common auth functionality
-function initializeAuthCommon() {
-    const loginForm = document.getElementById('loginForm');
-    
-    if (loginForm) {
-        // Login form functionality (from previous code)
-        initializeLoginPage();
-    }
-}
-
-// Initialize login page (from previous code, extracted as function)
+// Initialize login page
 function initializeLoginPage() {
     const loginForm = document.getElementById('loginForm');
     const togglePassword = document.getElementById('togglePassword');
@@ -103,12 +95,14 @@ function initializeLoginPage() {
     const loginBtn = document.getElementById('loginBtn');
     const messageAlert = document.getElementById('messageAlert');
 
+    // Password visibility toggle
     if (togglePassword && passwordInput) {
         togglePassword.addEventListener('click', function() {
             togglePasswordVisibility(passwordInput, this);
         });
     }
 
+    // Form validation and submission
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -119,21 +113,76 @@ function initializeLoginPage() {
         });
     }
 
+    // Real-time form validation for login form
+    const inputs = loginForm.querySelectorAll('.form-control');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateLoginField(this);
+        });
+        
+        input.addEventListener('input', function() {
+            if (this.classList.contains('is-invalid')) {
+                validateLoginField(this);
+            }
+        });
+    });
+
     // Social login handlers
     const googleBtn = document.querySelector('.btn-google');
     const microsoftBtn = document.querySelector('.btn-microsoft');
     
     if (googleBtn) {
         googleBtn.addEventListener('click', function() {
-            showAlert('Google registration would be implemented here', 'info');
+            showAlert('Google login would be implemented here', 'info');
         });
     }
     
     if (microsoftBtn) {
         microsoftBtn.addEventListener('click', function() {
-            showAlert('Microsoft registration would be implemented here', 'info');
+            showAlert('Microsoft login would be implemented here', 'info');
         });
     }
+}
+
+// Validate login form
+function validateLoginForm() {
+    let isValid = true;
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    
+    if (!validateLoginField(email)) isValid = false;
+    if (!validateLoginField(password)) isValid = false;
+    
+    return isValid;
+}
+
+// Validate individual login field
+function validateLoginField(field) {
+    const value = field.value.trim();
+    const fieldId = field.id;
+    
+    switch(fieldId) {
+        case 'email':
+            if (!value) {
+                showFieldError(field, 'Email is required');
+                return false;
+            }
+            if (!isValidEmail(value)) {
+                showFieldError(field, 'Please enter a valid email address');
+                return false;
+            }
+            break;
+            
+        case 'password':
+            if (!value) {
+                showFieldError(field, 'Password is required');
+                return false;
+            }
+            break;
+    }
+    
+    showFieldSuccess(field);
+    return true;
 }
 
 // Toggle password visibility
@@ -308,6 +357,67 @@ function validateTermsAgreement() {
     }
 }
 
+// Login user function
+function loginUser() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const rememberMe = document.getElementById('rememberMe') ? document.getElementById('rememberMe').checked : false;
+    
+    // Show loading state
+    const loginBtn = document.getElementById('loginBtn');
+    const btnText = loginBtn.querySelector('.btn-text');
+    const btnLoading = loginBtn.querySelector('.btn-loading');
+    
+    btnText.classList.add('d-none');
+    btnLoading.classList.remove('d-none');
+    loginBtn.disabled = true;
+    
+    // Create form data
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('rememberMe', rememberMe);
+    formData.append('ajax', 'true');
+
+    // AJAX request to server
+    fetch('/smart_core_erp/auth/login', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert(data.message, 'success');
+            
+            // Redirect to dashboard after successful login
+            setTimeout(() => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    window.location.href = '/smart_core_erp/dashboard';
+                }
+            }, 1000);
+            
+        } else {
+            showAlert(data.message, 'danger');
+            
+            // Reset loading state
+            btnText.classList.remove('d-none');
+            btnLoading.classList.add('d-none');
+            loginBtn.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again.', 'danger');
+        
+        // Reset loading state
+        btnText.classList.remove('d-none');
+        btnLoading.classList.add('d-none');
+        loginBtn.disabled = false;
+    });
+}
+
 // Register user function
 function registerUser() {
     const firstName = document.getElementById('firstName').value;
@@ -317,7 +427,7 @@ function registerUser() {
     const phone = document.getElementById('phone').value;
     const password = document.getElementById('password').value;
     const businessType = document.getElementById('businessType').value;
-    const newsletter = document.getElementById('newsletter').checked;
+    const newsletter = document.getElementById('newsletter') ? document.getElementById('newsletter').checked : false;
     
     const registerBtn = document.getElementById('registerBtn');
     const btnText = registerBtn.querySelector('.btn-text');
@@ -328,29 +438,60 @@ function registerUser() {
     btnLoading.classList.remove('d-none');
     registerBtn.disabled = true;
     
-    // Simulate API call (replace with actual API call)
-    setTimeout(() => {
-        // This is a simulation - replace with actual registration
-        if (email && password) {
-            showAlert('Account created successfully! Redirecting to login...', 'success');
+    // Create form data
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('company', company);
+    formData.append('phone', phone);
+    formData.append('password', password);
+    formData.append('confirmPassword', document.getElementById('confirmPassword').value);
+    formData.append('businessType', businessType);
+    formData.append('newsletter', newsletter);
+    formData.append('agreeTerms', true);
+    formData.append('ajax', 'true');
+
+    // AJAX request to server - correct endpoint use karo
+    fetch('/smart_core_erp/auth/ajax_register', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert(data.message, 'success');
             
-            // Redirect to login after successful registration
+            // Redirect after successful registration
             setTimeout(() => {
-                window.location.href = '/smart_core_erp/login';
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    window.location.href = '/smart_core_erp/dashboard';
+                }
             }, 2000);
             
         } else {
-            showAlert('Registration failed. Please try again.');
+            showAlert(data.message, 'danger');
             
             // Reset loading state
             btnText.classList.remove('d-none');
             btnLoading.classList.add('d-none');
             registerBtn.disabled = false;
         }
-    }, 2000);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again.', 'danger');
+        
+        // Reset loading state
+        btnText.classList.remove('d-none');
+        btnLoading.classList.add('d-none');
+        registerBtn.disabled = false;
+    });
 }
 
-// Common functions (from previous implementation)
+// Common functions
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
