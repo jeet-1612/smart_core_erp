@@ -1,3 +1,11 @@
+<?php 
+$base_url = '/smart_core_erp/';
+if (function_exists('base_url')) {
+    $base_url = base_url();
+} elseif (isset($this) && method_exists($this, 'config')) {
+    $base_url = $this->config->item('base_url');
+}
+?>
             </main>
         </div>
     </div>
@@ -15,13 +23,13 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="<?php echo isset($base_url) ? $base_url : '/smart_core_erp/'; ?>assets/js/dashboard.js"></script>
-    <script src="<?php echo isset($base_url) ? $base_url : '/smart_core_erp/'; ?>assets/js/custom.js"></script>
+    <script src="<?php echo $base_url; ?>assets/js/dashboard.js"></script>
+    <script src="<?php echo $base_url; ?>assets/js/custom.js"></script>
     
     <!-- Additional page-specific scripts -->
     <?php if(isset($additional_scripts)): ?>
         <?php foreach($additional_scripts as $script): ?>
-            <script src="<?php echo isset($base_url) ? $base_url : '/smart_core_erp/'; ?><?php echo $script; ?>"></script>
+            <script src="<?php echo $base_url . $script; ?>"></script>
         <?php endforeach; ?>
     <?php endif; ?>
     
