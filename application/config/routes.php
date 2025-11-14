@@ -84,3 +84,15 @@ $route['vendors/view/(:num)'] = 'vendors/view/$1';
 $route['vendors/delete/(:num)'] = 'vendors/delete/$1';
 $route['vendors/process_add'] = 'vendors/process_add';
 $route['vendors/process_edit/(:num)'] = 'vendors/process_edit/$1';
+
+// Sales Routes
+$route['sales'] = 'sales';
+$route['sales/create'] = 'sales/create';
+$route['sales/edit/(:num)'] = 'sales/edit/$1';
+$route['sales/view/(:num)'] = 'sales/view/$1';
+$route['sales/delete/(:num)'] = 'sales/delete/$1';
+$route['sales/invoices'] = 'sales/invoices';
+$route['sales/process_create'] = 'sales/process_create';
+$route['sales/process_edit/(:num)'] = 'sales/process_edit/$1';
+$route['sales/create_invoice/(:num)'] = 'sales/create_invoice/$1';
+$route['sales/update_status/(:num)'] = 'sales/update_status/$1';
