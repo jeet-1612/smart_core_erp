@@ -75,3 +75,12 @@ $route['clients/view/(:num)'] = 'clients/view/$1';
 $route['clients/delete/(:num)'] = 'clients/delete/$1';
 $route['clients/process_add'] = 'clients/process_add';
 $route['clients/process_edit/(:num)'] = 'clients/process_edit/$1';
+
+// Vendors Routes
+$route['vendors'] = 'vendors';
+$route['vendors/add'] = 'vendors/add';
+$route['vendors/edit/(:num)'] = 'vendors/edit/$1';
+$route['vendors/view/(:num)'] = 'vendors/view/$1';
+$route['vendors/delete/(:num)'] = 'vendors/delete/$1';
+$route['vendors/process_add'] = 'vendors/process_add';
+$route['vendors/process_edit/(:num)'] = 'vendors/process_edit/$1';
