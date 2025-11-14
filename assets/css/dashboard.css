@@ -56,8 +56,12 @@ body {
 }
 
 /* Main content */
+body {
+    padding-top: 56px;
+}
+
 main {
-    margin-top: 56px;
+    margin-top: 0;
 }
 
 /* Cards */
@@ -146,6 +150,14 @@ main {
 }
 
 /* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+}
+
 .navbar-brand {
     font-weight: 700;
 }
