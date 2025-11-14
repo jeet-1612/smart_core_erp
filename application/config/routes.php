@@ -66,3 +66,12 @@ $route['auth/ajax_register'] = 'auth/ajax_register';
 
 // Dashboard Route (we'll create this next)
 $route['dashboard'] = 'dashboard';
+
+// Clients Routes
+$route['clients'] = 'clients';
+$route['clients/add'] = 'clients/add';
+$route['clients/edit/(:num)'] = 'clients/edit/$1';
+$route['clients/view/(:num)'] = 'clients/view/$1';
+$route['clients/delete/(:num)'] = 'clients/delete/$1';
+$route['clients/process_add'] = 'clients/process_add';
+$route['clients/process_edit/(:num)'] = 'clients/process_edit/$1';
