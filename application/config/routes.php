@@ -96,3 +96,13 @@ $route['sales/process_create'] = 'sales/process_create';
 $route['sales/process_edit/(:num)'] = 'sales/process_edit/$1';
 $route['sales/create_invoice/(:num)'] = 'sales/create_invoice/$1';
 $route['sales/update_status/(:num)'] = 'sales/update_status/$1';
+
+// Purchase Routes
+$route['purchase'] = 'purchase';
+$route['purchase/create'] = 'purchase/create';
+$route['purchase/edit/(:num)'] = 'purchase/edit/$1';
+$route['purchase/view/(:num)'] = 'purchase/view/$1';
+$route['purchase/delete/(:num)'] = 'purchase/delete/$1';
+$route['purchase/process_create'] = 'purchase/process_create';
+$route['purchase/process_edit/(:num)'] = 'purchase/process_edit/$1';
+$route['purchase/update_status/(:num)'] = 'purchase/update_status/$1';

@@ -9,7 +9,6 @@ class Vendors extends CI_Controller {
         $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->database();
-        $this->load->model('Vendor_model');
         
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {

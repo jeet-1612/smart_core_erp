@@ -9,9 +9,6 @@ class Sales extends CI_Controller {
         $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->database();
-        $this->load->model('Sales_model');
-        $this->load->model('Client_model');
-        $this->load->model('Product_model');
         
         // Check if user is logged in
         if (!$this->session->userdata('logged_in')) {
