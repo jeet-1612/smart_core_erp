@@ -1,19 +1,3 @@
-<style>
-.status-draft {
-    background-color: #fff3cd;
-    color: #856404;
-}
-
-.status-posted {
-    background-color: #d1edff;
-    color: #004085;
-}
-
-.table-hover tbody tr:hover {
-    background-color: rgba(0, 0, 0, .075);
-}
-</style>
-
 <!-- Page Header -->
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Journal Entries</h1>
@@ -129,11 +113,11 @@
                 <h6 class="card-title">Posted Entries</h6>
                 <h4 class="card-text">
                     <?php 
-                                    $posted = array_filter($journal_entries, function($entry) {
-                                        return $entry->status == 'posted';
-                                    });
-                                    echo count($posted);
-                                    ?>
+                        $posted = array_filter($journal_entries, function($entry) {
+                            return $entry->status == 'posted';
+                        });
+                        echo count($posted);
+                    ?>
                 </h4>
             </div>
         </div>
@@ -144,11 +128,11 @@
                 <h6 class="card-title">Draft Entries</h6>
                 <h4 class="card-text">
                     <?php 
-                                    $draft = array_filter($journal_entries, function($entry) {
-                                        return $entry->status == 'draft';
-                                    });
-                                    echo count($draft);
-                                    ?>
+                        $draft = array_filter($journal_entries, function($entry) {
+                            return $entry->status == 'draft';
+                        });
+                        echo count($draft);
+                    ?>
                 </h4>
             </div>
         </div>
@@ -159,12 +143,12 @@
                 <h6 class="card-title">Total Amount</h6>
                 <h4 class="card-text">
                     ₹<?php 
-                                    $total = 0;
-                                    foreach ($journal_entries as $entry) {
-                                        $total += $entry->total_debit;
-                                    }
-                                    echo number_format($total, 2);
-                                    ?>
+                        $total = 0;
+                        foreach ($journal_entries as $entry) {
+                            $total += $entry->total_debit;
+                        }
+                        echo number_format($total, 2);
+                    ?>
                 </h4>
             </div>
         </div>

@@ -52,27 +52,27 @@
                 </thead>
                 <tbody>
                     <?php 
-                                        $total_debit = 0;
-                                        $total_credit = 0;
-                                        foreach ($trial_balance as $account): 
-                                            $total_debit += $account->total_debit;
-                                            $total_credit += $account->total_credit;
-                                        ?>
+                        $total_debit = 0;
+                        $total_credit = 0;
+                        foreach ($trial_balance as $account): 
+                            $total_debit += $account->total_debit;
+                            $total_credit += $account->total_credit;
+                        ?>
                     <tr>
                         <td><strong><?php echo $account->account_code; ?></strong></td>
                         <td><?php echo $account->account_name; ?></td>
                         <td>
                             <span class="badge 
-                                                    <?php 
-                                                    switch($account->account_type) {
-                                                        case 'asset': echo 'bg-success'; break;
-                                                        case 'liability': echo 'bg-danger'; break;
-                                                        case 'equity': echo 'bg-warning'; break;
-                                                        case 'income': echo 'bg-info'; break;
-                                                        case 'expense': echo 'bg-primary'; break;
-                                                        default: echo 'bg-secondary';
-                                                    }
-                                                    ?>">
+                                <?php 
+                                    switch($account->account_type) {
+                                        case 'asset': echo 'bg-success'; break;
+                                        case 'liability': echo 'bg-danger'; break;
+                                        case 'equity': echo 'bg-warning'; break;
+                                        case 'income': echo 'bg-info'; break;
+                                        case 'expense': echo 'bg-primary'; break;
+                                        default: echo 'bg-secondary';
+                                    }
+                                ?>">
                                 <?php echo ucfirst($account->account_type); ?>
                             </span>
                         </td>

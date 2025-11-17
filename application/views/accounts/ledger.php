@@ -73,10 +73,10 @@
                 </thead>
                 <tbody>
                     <?php 
-                                        $running_balance = 0;
-                                        foreach ($ledger_entries as $entry): 
-                                            $running_balance += $entry->debit_amount - $entry->credit_amount;
-                                        ?>
+                        $running_balance = 0;
+                        foreach ($ledger_entries as $entry): 
+                            $running_balance += $entry->debit_amount - $entry->credit_amount;
+                        ?>
                     <tr>
                         <td><?php echo date('M d, Y', strtotime($entry->entry_date)); ?></td>
                         <td><?php echo $entry->entry_number; ?></td>

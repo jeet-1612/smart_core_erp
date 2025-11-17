@@ -1,5 +1,3 @@
-
-
 <!-- Page Header -->
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Journal Entry Details</h1>
@@ -57,12 +55,12 @@
                 </thead>
                 <tbody>
                     <?php 
-                                    $total_debit = 0;
-                                    $total_credit = 0;
-                                    foreach ($journal_entry_items as $item): 
-                                        $total_debit += $item->debit_amount;
-                                        $total_credit += $item->credit_amount;
-                                    ?>
+                        $total_debit = 0;
+                        $total_credit = 0;
+                        foreach ($journal_entry_items as $item): 
+                            $total_debit += $item->debit_amount;
+                            $total_credit += $item->credit_amount;
+                    ?>
                     <tr>
                         <td><?php echo $item->account_name; ?></td>
                         <td><code><?php echo $item->account_code; ?></code></td>

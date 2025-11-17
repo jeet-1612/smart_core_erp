@@ -201,32 +201,24 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+$(function () {
     // Delete confirmation
-    const deleteButtons = document.querySelectorAll('.delete-sales');
-    const salesName = document.getElementById('salesName');
-    const confirmDelete = document.getElementById('confirmDelete');
+    $(document).on('click', '.delete-sales', function () {
+        let salesId = $(this).data('id');
+        let name = $(this).data('name');
 
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const salesId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
+        $('#salesName').text(name);
+        $('#confirmDelete').attr('href', '/smart_core_erp/sales/delete/' + salesId);
 
-            salesName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/sales/delete/' + salesId;
-
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-            modal.show();
-        });
+        let modal = new bootstrap.Modal($('#deleteModal')[0]);
+        modal.show();
     });
 
     // Initialize DataTable
-    if (document.getElementById('salesTable')) {
+    if ($('#salesTable').length) {
         $('#salesTable').DataTable({
-            "pageLength": 25,
-            "order": [
-                [0, 'desc']
-            ]
+            pageLength: 25,
+            order: [[0, 'desc']]
         });
     }
 });

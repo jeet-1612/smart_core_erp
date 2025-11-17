@@ -284,13 +284,11 @@
 </div>
 
 <script>
-// Disable start date for balance sheet
-document.getElementById('report_type').addEventListener('change', function() {
-    const startDate = document.getElementById('start_date');
-    if (this.value === 'balance_sheet') {
-        startDate.disabled = true;
+$(document).on('change', '#report_type', function () {
+    if ($(this).val() === 'balance_sheet') {
+        $('#start_date').prop('disabled', true);
     } else {
-        startDate.disabled = false;
+        $('#start_date').prop('disabled', false);
     }
 });
 </script>
