@@ -1,3 +1,66 @@
+<style>
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    border: 3px solid #fff;
+}
+
+.timeline-item.completed .timeline-marker {
+    background-color: #28a745;
+}
+
+.timeline-item.active .timeline-marker {
+    background-color: #007bff;
+    animation: pulse 2s infinite;
+}
+
+.timeline-content h6 {
+    margin-bottom: 5px;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+@media print {
+
+    .btn-toolbar,
+    .card:not(.print-this) {
+        display: none !important;
+    }
+
+    .card.print-this {
+        display: block !important;
+        border: 1px solid #000 !important;
+    }
+}
+</style>
+
 <!-- Page Heading -->
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Sales Order Details</h1>
@@ -10,17 +73,17 @@
 
 <!-- Flash Messages -->
 <?php if ($this->session->flashdata('success')): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <?php echo $this->session->flashdata('success'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('success'); ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 <?php endif; ?>
 
 <?php if ($this->session->flashdata('error')): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <?php echo $this->session->flashdata('error'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('error'); ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 <?php endif; ?>
 
 <div class="row">
@@ -77,7 +140,8 @@
                             </tr>
                             <tr>
                                 <th>Delivery Date:</th>
-                                <td><?php echo $sales_order->delivery_date ? date('M d, Y', strtotime($sales_order->delivery_date)) : 'Not set'; ?></td>
+                                <td><?php echo $sales_order->delivery_date ? date('M d, Y', strtotime($sales_order->delivery_date)) : 'Not set'; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Created By:</th>
@@ -122,28 +186,28 @@
                         </thead>
                         <tbody>
                             <?php if (!empty($sales_order_items)): ?>
-                                <?php foreach ($sales_order_items as $item): ?>
-                                    <tr>
-                                        <td>
-                                            <strong><?php echo $item->product_name; ?></strong><br>
-                                            <small class="text-muted">
-                                                Code: <?php echo $item->product_code; ?>
-                                                <?php if ($item->hsn_code): ?>
-                                                | HSN: <?php echo $item->hsn_code; ?>
-                                                <?php endif; ?>
-                                            </small>
-                                        </td>
-                                        <td class="text-center"><?php echo $item->quantity; ?></td>
-                                        <td class="text-end">₹<?php echo number_format($item->unit_price, 2); ?></td>
-                                        <td class="text-center"><?php echo $item->tax_rate; ?>%</td>
-                                        <td class="text-end">₹<?php echo number_format($item->tax_amount, 2); ?></td>
-                                        <td class="text-end">₹<?php echo number_format($item->total_amount, 2); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
+                            <?php foreach ($sales_order_items as $item): ?>
+                            <tr>
+                                <td>
+                                    <strong><?php echo $item->product_name; ?></strong><br>
+                                    <small class="text-muted">
+                                        Code: <?php echo $item->product_code; ?>
+                                        <?php if ($item->hsn_code): ?>
+                                        | HSN: <?php echo $item->hsn_code; ?>
+                                        <?php endif; ?>
+                                    </small>
+                                </td>
+                                <td class="text-center"><?php echo $item->quantity; ?></td>
+                                <td class="text-end">₹<?php echo number_format($item->unit_price, 2); ?></td>
+                                <td class="text-center"><?php echo $item->tax_rate; ?>%</td>
+                                <td class="text-end">₹<?php echo number_format($item->tax_amount, 2); ?></td>
+                                <td class="text-end">₹<?php echo number_format($item->total_amount, 2); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
                             <?php else: ?>
-                                <tr>
-                                    <td colspan="6" class="text-center">No items found</td>
-                                </tr>
+                            <tr>
+                                <td colspan="6" class="text-center">No items found</td>
+                            </tr>
                             <?php endif; ?>
                         </tbody>
                         <tfoot class="table-light">
@@ -162,7 +226,8 @@
                             <tr>
                                 <td colspan="4" class="text-end"><strong>Grand Total:</strong></td>
                                 <td colspan="2" class="text-end">
-                                    <strong class="text-primary fs-5">₹<?php echo number_format($sales_order->total_amount, 2); ?></strong>
+                                    <strong
+                                        class="text-primary fs-5">₹<?php echo number_format($sales_order->total_amount, 2); ?></strong>
                                 </td>
                             </tr>
                         </tfoot>
@@ -185,7 +250,7 @@
                         <p class="text-muted"><?php echo nl2br($sales_order->notes); ?></p>
                     </div>
                     <?php endif; ?>
-                    
+
                     <?php if ($sales_order->terms_conditions): ?>
                     <div class="col-md-6">
                         <h6>Terms & Conditions</h6>
@@ -209,40 +274,40 @@
                     <a href="/smart_core_erp/sales/edit/<?php echo $sales_order->id; ?>" class="btn btn-warning">
                         <i class="fas fa-edit"></i> Edit Sales Order
                     </a>
-                    
+
                     <?php if ($sales_order->status == 'draft' || $sales_order->status == 'confirmed'): ?>
-                    <a href="/smart_core_erp/sales/create_invoice/<?php echo $sales_order->id; ?>" class="btn btn-success">
+                    <a href="/smart_core_erp/sales/create_invoice/<?php echo $sales_order->id; ?>"
+                        class="btn btn-success">
                         <i class="fas fa-file-invoice"></i> Create Invoice
                     </a>
                     <?php endif; ?>
-                    
+
                     <?php if ($sales_order->status == 'draft'): ?>
                     <button type="button" class="btn btn-info" id="confirmOrder">
                         <i class="fas fa-check-circle"></i> Confirm Order
                     </button>
                     <?php endif; ?>
-                    
+
                     <?php if ($sales_order->status == 'confirmed'): ?>
                     <button type="button" class="btn btn-info" id="markShipped">
                         <i class="fas fa-shipping-fast"></i> Mark as Shipped
                     </button>
                     <?php endif; ?>
-                    
+
                     <?php if ($sales_order->status == 'shipped'): ?>
                     <button type="button" class="btn btn-primary" id="markDelivered">
                         <i class="fas fa-truck-loading"></i> Mark as Delivered
                     </button>
                     <?php endif; ?>
-                    
+
                     <?php if ($sales_order->status != 'cancelled'): ?>
                     <button type="button" class="btn btn-danger" id="cancelOrder">
                         <i class="fas fa-times-circle"></i> Cancel Order
                     </button>
                     <?php endif; ?>
-                    
-                    <button type="button" class="btn btn-outline-danger delete-sales" 
-                            data-id="<?php echo $sales_order->id; ?>"
-                            data-name="<?php echo $sales_order->so_number; ?>">
+
+                    <button type="button" class="btn btn-outline-danger delete-sales"
+                        data-id="<?php echo $sales_order->id; ?>" data-name="<?php echo $sales_order->so_number; ?>">
                         <i class="fas fa-trash"></i> Delete Sales Order
                     </button>
                 </div>
@@ -263,14 +328,16 @@
                             <small class="text-muted">Order created</small>
                         </div>
                     </div>
-                    <div class="timeline-item <?php echo $sales_order->status == 'confirmed' ? 'active' : ($sales_order->status == 'shipped' || $sales_order->status == 'delivered' ? 'completed' : ''); ?>">
+                    <div
+                        class="timeline-item <?php echo $sales_order->status == 'confirmed' ? 'active' : ($sales_order->status == 'shipped' || $sales_order->status == 'delivered' ? 'completed' : ''); ?>">
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <h6>Confirmed</h6>
                             <small class="text-muted">Order confirmed</small>
                         </div>
                     </div>
-                    <div class="timeline-item <?php echo $sales_order->status == 'shipped' ? 'active' : ($sales_order->status == 'delivered' ? 'completed' : ''); ?>">
+                    <div
+                        class="timeline-item <?php echo $sales_order->status == 'shipped' ? 'active' : ($sales_order->status == 'delivered' ? 'completed' : ''); ?>">
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <h6>Shipped</h6>
@@ -349,161 +416,131 @@
     </div>
 </div>
 
-<style>
-.timeline {
-    position: relative;
-    padding-left: 30px;
-}
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.timeline-marker {
-    position: absolute;
-    left: -30px;
-    top: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #e9ecef;
-    border: 3px solid #fff;
-}
-
-.timeline-item.completed .timeline-marker {
-    background-color: #28a745;
-}
-
-.timeline-item.active .timeline-marker {
-    background-color: #007bff;
-    animation: pulse 2s infinite;
-}
-
-.timeline-content h6 {
-    margin-bottom: 5px;
-}
-
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 123, 255, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 123, 255, 0); }
-}
-
-@media print {
-    .btn-toolbar, .card:not(.print-this) {
-        display: none !important;
-    }
-    
-    .card.print-this {
-        display: block !important;
-        border: 1px solid #000 !important;
-    }
-}
-</style>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const salesOrderId = <?php echo $sales_order->id; ?>;
-    
-    // Delete confirmation
-    const deleteButton = document.querySelector('.delete-sales');
-    const salesName = document.getElementById('salesName');
-    const confirmDelete = document.getElementById('confirmDelete');
-    
-    if (deleteButton) {
-        deleteButton.addEventListener('click', function() {
-            const salesId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            
-            salesName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/sales/delete/' + salesId;
-            
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+$(function () {
+    var salesOrderId = <?php echo $sales_order->id; ?>;
+
+    /* -------------------------
+       DELETE CONFIRMATION (single button)
+    ------------------------- */
+    $(document).on('click', '.delete-sales', function (e) {
+        e.preventDefault();
+
+        var salesId = $(this).data('id');
+        var name = $(this).data('name');
+
+        $('#salesName').text(name);
+        $('#confirmDelete').attr('href', '/smart_core_erp/sales/delete/' + salesId);
+
+        var modalEl = $('#deleteModal')[0];
+        if (modalEl) {
+            var modal = new bootstrap.Modal(modalEl);
             modal.show();
+        } else {
+            console.warn('#deleteModal not found');
+        }
+    });
+
+    /* -------------------------
+       STATUS MODAL HANDLING
+    ------------------------- */
+    var statusModalEl = $('#statusModal')[0];
+    var statusModal = statusModalEl ? new bootstrap.Modal(statusModalEl) : null;
+    var $statusModalTitle = $('#statusModalTitle');
+    var $statusModalMessage = $('#statusModalMessage');
+    var $confirmStatusUpdate = $('#confirmStatusUpdate');
+
+    function openStatusModal(title, message, statusCode) {
+        if (!$statusModalTitle.length || !$statusModalMessage.length || !$confirmStatusUpdate.length) {
+            console.warn('Status modal elements missing');
+            return;
+        }
+
+        $statusModalTitle.text(title);
+        $statusModalMessage.text(message);
+
+        // remove previous click handlers then attach
+        $confirmStatusUpdate.off('click.status').on('click.status', function (e) {
+            e.preventDefault();
+            updateOrderStatus(statusCode);
         });
+
+        if (statusModal) statusModal.show();
     }
-    
-    // Status update handlers
-    const statusModal = new bootstrap.Modal(document.getElementById('statusModal'));
-    const statusModalTitle = document.getElementById('statusModalTitle');
-    const statusModalMessage = document.getElementById('statusModalMessage');
-    const confirmStatusUpdate = document.getElementById('confirmStatusUpdate');
-    
+
     // Confirm Order
-    const confirmOrderBtn = document.getElementById('confirmOrder');
-    if (confirmOrderBtn) {
-        confirmOrderBtn.addEventListener('click', function() {
-            statusModalTitle.textContent = 'Confirm Order';
-            statusModalMessage.textContent = 'Are you sure you want to confirm this sales order? This action cannot be undone.';
-            confirmStatusUpdate.onclick = function() { updateOrderStatus('confirmed'); };
-            statusModal.show();
-        });
-    }
-    
+    $(document).on('click', '#confirmOrder', function (e) {
+        e.preventDefault();
+        openStatusModal(
+            'Confirm Order',
+            'Are you sure you want to confirm this sales order? This action cannot be undone.',
+            'confirmed'
+        );
+    });
+
     // Mark as Shipped
-    const markShippedBtn = document.getElementById('markShipped');
-    if (markShippedBtn) {
-        markShippedBtn.addEventListener('click', function() {
-            statusModalTitle.textContent = 'Mark as Shipped';
-            statusModalMessage.textContent = 'Are you sure you want to mark this order as shipped?';
-            confirmStatusUpdate.onclick = function() { updateOrderStatus('shipped'); };
-            statusModal.show();
-        });
-    }
-    
+    $(document).on('click', '#markShipped', function (e) {
+        e.preventDefault();
+        openStatusModal('Mark as Shipped', 'Are you sure you want to mark this order as shipped?', 'shipped');
+    });
+
     // Mark as Delivered
-    const markDeliveredBtn = document.getElementById('markDelivered');
-    if (markDeliveredBtn) {
-        markDeliveredBtn.addEventListener('click', function() {
-            statusModalTitle.textContent = 'Mark as Delivered';
-            statusModalMessage.textContent = 'Are you sure you want to mark this order as delivered?';
-            confirmStatusUpdate.onclick = function() { updateOrderStatus('delivered'); };
-            statusModal.show();
-        });
-    }
-    
+    $(document).on('click', '#markDelivered', function (e) {
+        e.preventDefault();
+        openStatusModal('Mark as Delivered', 'Are you sure you want to mark this order as delivered?', 'delivered');
+    });
+
     // Cancel Order
-    const cancelOrderBtn = document.getElementById('cancelOrder');
-    if (cancelOrderBtn) {
-        cancelOrderBtn.addEventListener('click', function() {
-            statusModalTitle.textContent = 'Cancel Order';
-            statusModalMessage.textContent = 'Are you sure you want to cancel this sales order? This action cannot be undone.';
-            confirmStatusUpdate.onclick = function() { updateOrderStatus('cancelled'); };
-            statusModal.show();
-        });
-    }
-    
-    // Update order status function
+    $(document).on('click', '#cancelOrder', function (e) {
+        e.preventDefault();
+        openStatusModal(
+            'Cancel Order',
+            'Are you sure you want to cancel this sales order? This action cannot be undone.',
+            'cancelled'
+        );
+    });
+
+    /* -------------------------
+       AJAX: Update Order Status
+    ------------------------- */
     function updateOrderStatus(newStatus) {
-        fetch('/smart_core_erp/sales/update_status/' + salesOrderId, {
+        $.ajax({
+            url: '/smart_core_erp/sales/update_status/' + salesOrderId,
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+            data: {
+                status: newStatus,
+                ajax: true
             },
-            body: 'status=' + newStatus + '&ajax=true'
+            dataType: 'json'
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
+        .done(function (response) {
+            if (response && response.success) {
                 location.reload();
             } else {
-                alert('Failed to update status: ' + data.message);
+                var msg = response && response.message ? response.message : 'Unknown error';
+                alert('Failed to update status: ' + msg);
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error('Status update failed:', textStatus, errorThrown);
             alert('An error occurred while updating status.');
         });
     }
-    
-    // Print functionality
-    document.getElementById('downloadPDF').addEventListener('click', function() {
+
+    /* -------------------------
+       PRINT & EMAIL PLACEHOLDERS
+    ------------------------- */
+    $(document).on('click', '#downloadPDF', function (e) {
+        e.preventDefault();
         alert('PDF download functionality would be implemented here.');
     });
-    
-    document.getElementById('sendEmail').addEventListener('click', function() {
+
+    $(document).on('click', '#sendEmail', function (e) {
+        e.preventDefault();
         alert('Email functionality would be implemented here.');
     });
+
 });
 </script>

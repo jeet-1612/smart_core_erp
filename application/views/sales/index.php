@@ -222,32 +222,35 @@
     </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Delete confirmation
-    const deleteButtons = document.querySelectorAll('.delete-sales');
-    const salesName = document.getElementById('salesName');
-    const confirmDelete = document.getElementById('confirmDelete');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const salesId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            
-            salesName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/sales/delete/' + salesId;
-            
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+$(function () {
+    $(document).on('click', '.delete-sales', function (e) {
+        e.preventDefault();
+
+        var salesId = $(this).data('id');
+        var name = $(this).data('name');
+
+        $('#salesName').text(name);
+        $('#confirmDelete').attr('href', '/smart_core_erp/sales/delete/' + salesId);
+
+        var modalEl = $('#deleteModal')[0];
+        if (modalEl) {
+            var modal = new bootstrap.Modal(modalEl);
             modal.show();
-        });
+        } else {
+            console.warn('#deleteModal element not found.');
+        }
     });
-    
-    // Initialize DataTable
-    if (document.getElementById('salesTable')) {
+
+    // Initialize DataTable (requires DataTables JS/CSS + jQuery)
+    if ($('#salesTable').length) {
         $('#salesTable').DataTable({
-            "pageLength": 25,
-            "order": [[0, 'desc']]
+            pageLength: 25,
+            order: [[0, 'desc']]
         });
     }
+
 });
 </script>
