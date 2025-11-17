@@ -164,165 +164,159 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-let itemCount = 0;
+$(function() {
+    var itemCount = 0;
 
-// Initialize with one empty item
-document.addEventListener('DOMContentLoaded', function() {
+    // Initialize with one empty item
     addItem();
-});
 
-// Add new item
-document.getElementById('addItemBtn').addEventListener('click', function() {
-    addItem();
-});
-
-function addItem() {
-    const template = document.getElementById('itemTemplate').innerHTML;
-    const newItem = template.replace(/INDEX/g, itemCount);
-
-    const entryItems = document.getElementById('entryItems');
-    const emptyState = document.getElementById('emptyState');
-
-    entryItems.insertAdjacentHTML('beforeend', newItem);
-    emptyState.style.display = 'none';
-
-    // Add event listeners to new item
-    const newItemElement = entryItems.lastElementChild;
-    const debitInput = newItemElement.querySelector('.debit-amount');
-    const creditInput = newItemElement.querySelector('.credit-amount');
-    const removeBtn = newItemElement.querySelector('.remove-item');
-
-    debitInput.addEventListener('input', calculateTotals);
-    creditInput.addEventListener('input', calculateTotals);
-    removeBtn.addEventListener('click', function() {
-        newItemElement.remove();
-        calculateTotals();
-        if (entryItems.children.length === 0) {
-            emptyState.style.display = 'block';
-        }
-    });
-
-    // Auto-focus on account select
-    newItemElement.querySelector('.account-select').focus();
-
-    itemCount++;
-    calculateTotals();
-}
-
-// Calculate totals
-function calculateTotals() {
-    let totalDebit = 0;
-    let totalCredit = 0;
-
-    document.querySelectorAll('.entry-item').forEach(function(item) {
-        const debit = parseFloat(item.querySelector('.debit-amount').value) || 0;
-        const credit = parseFloat(item.querySelector('.credit-amount').value) || 0;
-
-        totalDebit += debit;
-        totalCredit += credit;
-    });
-
-    document.getElementById('totalDebit').textContent = '₹' + totalDebit.toFixed(2);
-    document.getElementById('totalCredit').textContent = '₹' + totalCredit.toFixed(2);
-
-    const difference = totalDebit - totalCredit;
-    document.getElementById('difference').textContent = '₹' + Math.abs(difference).toFixed(2);
-
-    // Update validation
-    validateForm(totalDebit, totalCredit);
-}
-
-// Validate form
-function validateForm(totalDebit, totalCredit) {
-    const submitBtn = document.getElementById('submitBtn');
-    const validationMessages = document.getElementById('validationMessages');
-    const items = document.querySelectorAll('.entry-item');
-
-    let messages = [];
-
-    // Check if there are items
-    if (items.length === 0) {
-        messages.push('<div class="alert alert-warning">Add at least one journal entry item.</div>');
-    }
-
-    // Check if debits equal credits
-    if (Math.abs(totalDebit - totalCredit) > 0.01) {
-        messages.push(
-            '<div class="alert alert-danger">Journal entry must balance. Total debits must equal total credits.</div>'
-        );
-    }
-
-    // Check if all items have either debit or credit
-    let validItems = true;
-    document.querySelectorAll('.entry-item').forEach(function(item) {
-        const debit = parseFloat(item.querySelector('.debit-amount').value) || 0;
-        const credit = parseFloat(item.querySelector('.credit-amount').value) || 0;
-        const account = item.querySelector('.account-select').value;
-
-        if (!account) {
-            validItems = false;
-        }
-        if (debit === 0 && credit === 0) {
-            validItems = false;
-        }
-        if (debit > 0 && credit > 0) {
-            validItems = false;
-        }
-    });
-
-    if (!validItems) {
-        messages.push(
-            '<div class="alert alert-warning">All items must have an account and either debit or credit amount (not both).</div>'
-        );
-    }
-
-    // Update validation messages
-    validationMessages.innerHTML = messages.join('');
-
-    // Enable/disable submit button
-    submitBtn.disabled = messages.length > 0 || items.length === 0;
-}
-
-// Reset form
-function resetForm() {
-    if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
-        document.getElementById('journalEntryForm').reset();
-        document.getElementById('entryItems').innerHTML = '';
-        document.getElementById('emptyState').style.display = 'block';
-        itemCount = 0;
+    // Add new item
+    $('#addItemBtn').on('click', function() {
         addItem();
+    });
+
+    function addItem() {
+        var template = $('#itemTemplate').html();
+        var newHtml = template.replace(/INDEX/g, itemCount);
+
+        var $entryItems = $('#entryItems');
+        var $emptyState = $('#emptyState');
+
+        $entryItems.append(newHtml);
+        $emptyState.hide();
+
+        var $newItem = $entryItems.children().last();
+
+        // Auto-focus on account select
+        $newItem.find('.account-select').focus();
+
+        itemCount++;
         calculateTotals();
     }
-}
 
-// Form submission validation
-document.getElementById('journalEntryForm').addEventListener('submit', function(e) {
-    const totalDebit = parseFloat(document.getElementById('totalDebit').textContent.replace('₹', '')) || 0;
-    const totalCredit = parseFloat(document.getElementById('totalCredit').textContent.replace('₹', '')) || 0;
+    // Delegated input listeners for debit/credit to recalc totals
+    $('#entryItems').on('input', '.debit-amount, .credit-amount', function() {
+        calculateTotals();
+    });
 
-    if (Math.abs(totalDebit - totalCredit) > 0.01) {
+    // Delegated remove button
+    $('#entryItems').on('click', '.remove-item', function(e) {
         e.preventDefault();
-        alert('Journal entry must balance. Total debits must equal total credits.');
-        return false;
+        var $item = $(this).closest('.entry-item');
+        $item.remove();
+        calculateTotals();
+        if ($('#entryItems').children().length === 0) {
+            $('#emptyState').show();
+        }
+    });
+
+    // Calculate totals
+    function calculateTotals() {
+        var totalDebit = 0;
+        var totalCredit = 0;
+
+        $('.entry-item').each(function() {
+            var debit = parseFloat($(this).find('.debit-amount').val()) || 0;
+            var credit = parseFloat($(this).find('.credit-amount').val()) || 0;
+
+            totalDebit += debit;
+            totalCredit += credit;
+        });
+
+        $('#totalDebit').text('₹' + totalDebit.toFixed(2));
+        $('#totalCredit').text('₹' + totalCredit.toFixed(2));
+
+        var difference = totalDebit - totalCredit;
+        $('#difference').text('₹' + Math.abs(difference).toFixed(2));
+
+        validateForm(totalDebit, totalCredit);
     }
 
-    // Show loading state
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-});
+    // Validate form
+    function validateForm(totalDebit, totalCredit) {
+        var $submitBtn = $('#submitBtn');
+        var $validationMessages = $('#validationMessages');
+        var $items = $('.entry-item');
 
-// Auto-calculate: when debit is entered, clear credit and vice versa
-document.addEventListener('input', function(e) {
-    if (e.target.classList.contains('debit-amount') && parseFloat(e.target.value) > 0) {
-        const creditInput = e.target.closest('.row').querySelector('.credit-amount');
-        creditInput.value = '';
+        var messages = [];
+
+        // Check if there are items
+        if ($items.length === 0) {
+            messages.push('<div class="alert alert-warning">Add at least one journal entry item.</div>');
+        }
+
+        // Check if debits equal credits
+        if (Math.abs(totalDebit - totalCredit) > 0.01) {
+            messages.push('<div class="alert alert-danger">Journal entry must balance. Total debits must equal total credits.</div>');
+        }
+
+        // Check if all items have either debit or credit and account present
+        var validItems = true;
+        $items.each(function() {
+            var debit = parseFloat($(this).find('.debit-amount').val()) || 0;
+            var credit = parseFloat($(this).find('.credit-amount').val()) || 0;
+            var account = $(this).find('.account-select').val();
+
+            if (!account) validItems = false;
+            if (debit === 0 && credit === 0) validItems = false;
+            if (debit > 0 && credit > 0) validItems = false;
+        });
+
+        if (!validItems) {
+            messages.push('<div class="alert alert-warning">All items must have an account and either debit or credit amount (not both).</div>');
+        }
+
+        $validationMessages.html(messages.join(''));
+
+        // Enable/disable submit button
+        $submitBtn.prop('disabled', messages.length > 0 || $items.length === 0);
     }
-    if (e.target.classList.contains('credit-amount') && parseFloat(e.target.value) > 0) {
-        const debitInput = e.target.closest('.row').querySelector('.debit-amount');
-        debitInput.value = '';
-    }
+
+    // Reset form
+    window.resetForm = function() { // keep same function name if used elsewhere
+        if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+            $('#journalEntryForm')[0].reset();
+            $('#entryItems').empty();
+            $('#emptyState').show();
+            itemCount = 0;
+            addItem();
+            calculateTotals();
+        }
+    };
+
+    // Form submission validation
+    $('#journalEntryForm').on('submit', function(e) {
+        var totalDebit = parseFloat($('#totalDebit').text().replace('₹', '')) || 0;
+        var totalCredit = parseFloat($('#totalCredit').text().replace('₹', '')) || 0;
+
+        if (Math.abs(totalDebit - totalCredit) > 0.01) {
+            e.preventDefault();
+            alert('Journal entry must balance. Total debits must equal total credits.');
+            return false;
+        }
+
+        // Show loading state
+        var $submitBtn = $('#submitBtn');
+        $submitBtn.prop('disabled', true);
+        $submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Saving...');
+    });
+
+    // Auto-calculate: when debit is entered, clear credit and vice versa (delegated)
+    $(document).on('input', '.debit-amount', function() {
+        var val = parseFloat($(this).val()) || 0;
+        if (val > 0) {
+            $(this).closest('.row').find('.credit-amount').val('');
+        }
+    });
+
+    $(document).on('input', '.credit-amount', function() {
+        var val = parseFloat($(this).val()) || 0;
+        if (val > 0) {
+            $(this).closest('.row').find('.debit-amount').val('');
+        }
+    });
 });
 </script>
