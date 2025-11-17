@@ -10,17 +10,17 @@
 
 <!-- Flash Messages -->
 <?php if ($this->session->flashdata('success')): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <?php echo $this->session->flashdata('success'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('success'); ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 <?php endif; ?>
 
 <?php if ($this->session->flashdata('error')): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <?php echo $this->session->flashdata('error'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('error'); ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 <?php endif; ?>
 
 <!-- Clients Table -->
@@ -44,43 +44,42 @@
                 </thead>
                 <tbody>
                     <?php if (!empty($clients)): ?>
-                        <?php foreach ($clients as $client): ?>
-                            <tr>
-                                <td><?php echo $client->client_code; ?></td>
-                                <td><?php echo $client->company_name; ?></td>
-                                <td><?php echo $client->contact_person; ?></td>
-                                <td><?php echo $client->email; ?></td>
-                                <td><?php echo $client->phone; ?></td>
-                                <td>
-                                    <span class="badge bg-<?php echo $client->status == 'active' ? 'success' : 'danger'; ?>">
-                                        <?php echo ucfirst($client->status); ?>
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a href="/smart_core_erp/clients/view/<?php echo $client->id; ?>" 
-                                           class="btn btn-info btn-sm" title="View">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="/smart_core_erp/clients/edit/<?php echo $client->id; ?>" 
-                                           class="btn btn-warning btn-sm" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button type="button" 
-                                                class="btn btn-danger btn-sm delete-client" 
-                                                data-id="<?php echo $client->id; ?>"
-                                                data-name="<?php echo $client->company_name; ?>"
-                                                title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                    <?php foreach ($clients as $client): ?>
+                    <tr>
+                        <td><?php echo $client->client_code; ?></td>
+                        <td><?php echo $client->company_name; ?></td>
+                        <td><?php echo $client->contact_person; ?></td>
+                        <td><?php echo $client->email; ?></td>
+                        <td><?php echo $client->phone; ?></td>
+                        <td>
+                            <span class="badge bg-<?php echo $client->status == 'active' ? 'success' : 'danger'; ?>">
+                                <?php echo ucfirst($client->status); ?>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="/smart_core_erp/clients/view/<?php echo $client->id; ?>"
+                                    class="btn btn-info btn-sm" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="/smart_core_erp/clients/edit/<?php echo $client->id; ?>"
+                                    class="btn btn-warning btn-sm" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm delete-client"
+                                    data-id="<?php echo $client->id; ?>"
+                                    data-name="<?php echo $client->company_name; ?>" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
                     <?php else: ?>
-                        <tr>
-                            <td colspan="7" class="text-center">No clients found. <a href="/smart_core_erp/clients/add">Add your first client</a></td>
-                        </tr>
+                    <tr>
+                        <td colspan="7" class="text-center">No clients found. <a href="/smart_core_erp/clients/add">Add
+                                your first client</a></td>
+                    </tr>
                     <?php endif; ?>
                 </tbody>
             </table>
@@ -108,32 +107,29 @@
     </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+$(function () {
     // Delete confirmation
-    const deleteButtons = document.querySelectorAll('.delete-client');
-    const clientName = document.getElementById('clientName');
-    const confirmDelete = document.getElementById('confirmDelete');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const clientId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            
-            clientName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/clients/delete/' + clientId;
-            
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
-            modal.show();
-        });
+    $(document).on('click', '.delete-client', function () {
+        let clientId = $(this).data('id');
+        let name     = $(this).data('name');
+
+        $('#clientName').text(name);
+        $('#confirmDelete').attr('href', '/smart_core_erp/clients/delete/' + clientId);
+
+        let modal = new bootstrap.Modal($('#deleteModal')[0]);
+        modal.show();
     });
-    
+
     // Initialize DataTable
-    if (document.getElementById('clientsTable')) {
+    if ($('#clientsTable').length) {
         $('#clientsTable').DataTable({
-            "pageLength": 25,
-            "order": [[0, 'desc']]
+            pageLength: 25,
+            order: [[0, 'desc']]
         });
     }
+
 });
 </script>

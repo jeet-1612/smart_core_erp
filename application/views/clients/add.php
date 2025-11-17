@@ -10,10 +10,10 @@
 
 <!-- Flash Messages -->
 <?php if ($this->session->flashdata('error')): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <?php echo $this->session->flashdata('error'); ?>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <?php echo $this->session->flashdata('error'); ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
 <?php endif; ?>
 
 <div class="row">
@@ -34,7 +34,8 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="contact_person" class="form-label">Contact Person *</label>
-                                <input type="text" class="form-control" id="contact_person" name="contact_person" required>
+                                <input type="text" class="form-control" id="contact_person" name="contact_person"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -114,7 +115,8 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="credit_limit" class="form-label">Credit Limit (₹)</label>
-                                <input type="number" class="form-control" id="credit_limit" name="credit_limit" value="0" step="0.01">
+                                <input type="number" class="form-control" id="credit_limit" name="credit_limit"
+                                    value="0" step="0.01">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -138,7 +140,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -157,24 +159,20 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Form validation
-    const form = document.getElementById('clientForm');
-    
-    form.addEventListener('submit', function(e) {
+$(function () {
+    $('#clientForm').on('submit', function (e) {
         let valid = true;
-        
-        // Basic validation
-        const requiredFields = form.querySelectorAll('[required]');
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
+
+        // Basic validation for required fields
+        $(this).find('[required]').each(function () {
+            if (!$(this).val().trim()) {
                 valid = false;
-                field.classList.add('is-invalid');
+                $(this).addClass('is-invalid');
             } else {
-                field.classList.remove('is-invalid');
+                $(this).removeClass('is-invalid');
             }
         });
-        
+
         if (!valid) {
             e.preventDefault();
             alert('Please fill in all required fields.');

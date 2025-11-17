@@ -158,22 +158,23 @@
     </div>
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Delete confirmation
-    const deleteButton = document.querySelector('.delete-client');
-    const clientName = document.getElementById('clientName');
-    const confirmDelete = document.getElementById('confirmDelete');
-    
-    if (deleteButton) {
-        deleteButton.addEventListener('click', function() {
-            const clientId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            
-            clientName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/clients/delete/' + clientId;
-            
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+$(function () {
+    // Delete confirmation (single delete button)
+    const $deleteButton = $('.delete-client');
+
+    if ($deleteButton.length) {
+        $deleteButton.on('click', function () {
+
+            let clientId = $(this).data('id');
+            let name     = $(this).data('name');
+
+            $('#clientName').text(name);
+            $('#confirmDelete').attr('href', '/smart_core_erp/clients/delete/' + clientId);
+
+            let modal = new bootstrap.Modal($('#deleteModal')[0]);
             modal.show();
         });
     }
