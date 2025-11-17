@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <!-- Temporary direct path -->
     <link rel="stylesheet" href="/smart_core_erp/assets/css/main.css">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -49,7 +51,8 @@
             <div class="row align-items-center min-vh-100">
                 <div class="col-lg-6">
                     <h1 class="hero-title">Streamline Your Business with <span>Smart-Core ERP</span></h1>
-                    <p class="hero-subtitle">Complete enterprise resource planning solution for modern businesses. Manage sales, purchases, inventory, accounts, and more in one integrated platform.</p>
+                    <p class="hero-subtitle">Complete enterprise resource planning solution for modern businesses.
+                        Manage sales, purchases, inventory, accounts, and more in one integrated platform.</p>
                     <div class="hero-buttons">
                         <!-- Temporary direct links -->
                         <a href="/smart_core_erp/login" class="btn btn-primary btn-lg">
@@ -64,7 +67,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-image">
-                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="ERP Dashboard" class="img-fluid">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="ERP Dashboard" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -135,43 +139,47 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="about-image">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About Smart-Core ERP" class="img-fluid rounded">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                            alt="About Smart-Core ERP" class="img-fluid rounded">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="about-content">
                         <h2>About Smart-Core ERP</h2>
                         <p class="lead">Transforming businesses through intelligent enterprise solutions</p>
-                        
+
                         <div class="about-features">
                             <div class="about-feature-item">
                                 <i class="fas fa-bullseye"></i>
                                 <div>
                                     <h5>Our Mission</h5>
-                                    <p>To provide affordable, scalable, and user-friendly ERP solutions that empower businesses of all sizes to optimize their operations and drive growth.</p>
+                                    <p>To provide affordable, scalable, and user-friendly ERP solutions that empower
+                                        businesses of all sizes to optimize their operations and drive growth.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="about-feature-item">
                                 <i class="fas fa-eye"></i>
                                 <div>
                                     <h5>Our Vision</h5>
-                                    <p>To become the leading ERP solution provider for small and medium enterprises, enabling digital transformation across industries.</p>
+                                    <p>To become the leading ERP solution provider for small and medium enterprises,
+                                        enabling digital transformation across industries.</p>
                                 </div>
                             </div>
-                            
+
                             <div class="about-feature-item">
                                 <i class="fas fa-handshake"></i>
                                 <div>
                                     <h5>Why Choose Us?</h5>
-                                    <p>With years of industry experience and a customer-first approach, we deliver solutions that actually work for your business needs.</p>
+                                    <p>With years of industry experience and a customer-first approach, we deliver
+                                        solutions that actually work for your business needs.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Stats Section -->
             <div class="row stats-section mt-5">
                 <div class="col-md-3 text-center">
@@ -247,7 +255,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Contact Info -->
             <div class="row contact-info mt-5">
                 <div class="col-md-4 text-center">
@@ -315,4 +323,5 @@
     <!-- Temporary direct path -->
     <script src="/smart_core_erp/assets/js/main.js"></script>
 </body>
+
 </html>

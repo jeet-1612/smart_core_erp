@@ -216,32 +216,35 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Delete confirmation
-    const deleteButtons = document.querySelectorAll('.delete-purchase');
-    const purchaseName = document.getElementById('purchaseName');
-    const confirmDelete = document.getElementById('confirmDelete');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const purchaseId = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            
-            purchaseName.textContent = name;
-            confirmDelete.href = '/smart_core_erp/purchase/delete/' + purchaseId;
-            
-            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+$(function () {
+    // Delete confirmation (delegated so it works for dynamic rows too)
+    $(document).on('click', '.delete-purchase', function (e) {
+        e.preventDefault();
+
+        var purchaseId = $(this).data('id');
+        var name = $(this).data('name');
+
+        $('#purchaseName').text(name);
+        $('#confirmDelete').attr('href', '/smart_core_erp/purchase/delete/' + purchaseId);
+
+        var modalEl = $('#deleteModal')[0];
+        if (modalEl) {
+            var modal = new bootstrap.Modal(modalEl);
             modal.show();
-        });
+        } else {
+            console.warn('Delete modal element (#deleteModal) not found.');
+        }
     });
-    
+
     // Initialize DataTable
-    if (document.getElementById('purchaseTable')) {
+    if ($('#purchaseTable').length) {
         $('#purchaseTable').DataTable({
-            "pageLength": 25,
-            "order": [[0, 'desc']]
+            pageLength: 25,
+            order: [[0, 'desc']]
         });
     }
+
 });
 </script>
