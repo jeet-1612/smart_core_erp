@@ -87,12 +87,16 @@
                     <label for="category_id" class="form-label">Category</label>
                     <select class="form-select" id="category_id" name="category_id">
                         <option value="">All Categories</option>
+                        <?php if (!empty($categories)): ?>
                         <?php foreach ($categories as $category): ?>
                         <option value="<?php echo $category->id; ?>"
                             <?php echo $category_id == $category->id ? 'selected' : ''; ?>>
                             <?php echo $category->category_name; ?>
                         </option>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                        <option value="1">General</option>
+                        <?php endif; ?>
                     </select>
                 </div>
                 <?php endif; ?>

@@ -280,18 +280,23 @@ class Report_model extends CI_Model {
                 return array();
             }
             
-            $this->db->select('p.*, c.category_name');
-            $this->db->from('products p');
+            $this->db->select('p.*');
             
-            if ($this->db->table_exists('categories') && $this->db->field_exists('category_id', 'products')) {
+            // Add category name if categories table exists and join is possible
+            if ($this->db->table_exists('categories') && 
+                $this->db->field_exists('category_id', 'products') &&
+                $this->db->field_exists('category_name', 'categories')) {
+                $this->db->select('c.category_name');
                 $this->db->join('categories c', 'p.category_id = c.id', 'left');
             } else {
-                $this->db->select("'N/A' as category_name");
+                // If categories table doesn't exist or missing columns, use default value
+                $this->db->select("'General' as category_name");
             }
             
+            $this->db->from('products p');
             $this->db->where('p.is_active', 1);
             
-            if ($category_id) {
+            if ($category_id && $this->db->field_exists('category_id', 'products')) {
                 $this->db->where('p.category_id', $category_id);
             }
             
@@ -312,18 +317,24 @@ class Report_model extends CI_Model {
                 return array();
             }
             
-            $this->db->select('p.*, c.category_name');
-            $this->db->from('products p');
+            $this->db->select('p.*');
             
-            if ($this->db->table_exists('categories') && $this->db->field_exists('category_id', 'products')) {
+            // Add category name if possible
+            if ($this->db->table_exists('categories') && 
+                $this->db->field_exists('category_id', 'products') &&
+                $this->db->field_exists('category_name', 'categories')) {
+                $this->db->select('c.category_name');
                 $this->db->join('categories c', 'p.category_id = c.id', 'left');
             } else {
-                $this->db->select("'N/A' as category_name");
+                $this->db->select("'General' as category_name");
             }
             
+            $this->db->from('products p');
             $this->db->where('p.is_active', 1);
             
-            if ($this->db->field_exists('reorder_level', 'products') && $this->db->field_exists('current_stock', 'products')) {
+            // Check if reorder_level and current_stock columns exist
+            if ($this->db->field_exists('reorder_level', 'products') && 
+                $this->db->field_exists('current_stock', 'products')) {
                 $this->db->where('p.current_stock <= p.reorder_level');
             }
             
@@ -340,13 +351,22 @@ class Report_model extends CI_Model {
 
     public function get_stock_movements_report() {
         try {
-            if (!$this->db->table_exists('stock_movements') || !$this->db->table_exists('products')) {
+            if (!$this->db->table_exists('stock_movements')) {
                 return array();
             }
             
-            $this->db->select('sm.*, p.product_name, p.product_code');
+            $this->db->select('sm.*');
+            
+            // Add product information if products table exists
+            if ($this->db->table_exists('products') && 
+                $this->db->field_exists('product_id', 'stock_movements')) {
+                $this->db->select('p.product_name, p.product_code');
+                $this->db->join('products p', 'sm.product_id = p.id', 'left');
+            } else {
+                $this->db->select("'Product' as product_name, '' as product_code");
+            }
+            
             $this->db->from('stock_movements sm');
-            $this->db->join('products p', 'sm.product_id = p.id');
             $this->db->order_by('sm.created_at', 'DESC');
             $this->db->limit(100); // Limit to recent 100 movements
             
@@ -365,26 +385,45 @@ class Report_model extends CI_Model {
                 return array();
             }
             
-            // CORRECTED: Use manual calculation instead of SQL multiplication
-            $this->db->select('p.*, c.category_name, (p.current_stock * p.cost_price) as stock_value');
-            $this->db->from('products p');
+            $this->db->select('p.*');
             
-            if ($this->db->table_exists('categories') && $this->db->field_exists('category_id', 'products')) {
+            // Add category name if possible
+            if ($this->db->table_exists('categories') && 
+                $this->db->field_exists('category_id', 'products') &&
+                $this->db->field_exists('category_name', 'categories')) {
+                $this->db->select('c.category_name');
                 $this->db->join('categories c', 'p.category_id = c.id', 'left');
             } else {
-                $this->db->select("'N/A' as category_name");
+                $this->db->select("'General' as category_name");
             }
             
+            // Calculate stock value
+            if ($this->db->field_exists('current_stock', 'products') && 
+                $this->db->field_exists('cost_price', 'products')) {
+                $this->db->select('(p.current_stock * p.cost_price) as stock_value', FALSE);
+            } else {
+                $this->db->select('0 as stock_value');
+            }
+            
+            $this->db->from('products p');
             $this->db->where('p.is_active', 1);
-            $this->db->order_by('stock_value', 'DESC');
+            
+            // Order by stock value if available, otherwise by product name
+            if ($this->db->field_exists('current_stock', 'products') && 
+                $this->db->field_exists('cost_price', 'products')) {
+                $this->db->order_by('stock_value', 'DESC');
+            } else {
+                $this->db->order_by('p.product_name', 'ASC');
+            }
             
             $query = $this->db->get();
             $products = $query->result();
             
-            // Alternative: Calculate stock value manually if SQL multiplication fails
+            // Manual calculation as fallback
             foreach ($products as $product) {
                 if (!isset($product->stock_value) || $product->stock_value === null) {
-                    $product->stock_value = $product->current_stock * $product->cost_price;
+                    $product->stock_value = isset($product->current_stock) && isset($product->cost_price) ? 
+                        $product->current_stock * $product->cost_price : 0;
                 }
             }
             
@@ -609,6 +648,11 @@ class Report_model extends CI_Model {
     public function get_categories() {
         try {
             if (!$this->db->table_exists('categories')) {
+                return array();
+            }
+            
+            // Check if required columns exist
+            if (!$this->db->field_exists('category_name', 'categories')) {
                 return array();
             }
             
