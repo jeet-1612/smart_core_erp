@@ -8,7 +8,7 @@ if (function_exists('base_url')) {
 ?>
 <!-- Sidebar -->
 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-    <div class="position-sticky pt-3">
+    <div class="position-sticky pt-1">
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link <?php echo (isset($this->uri) && $this->uri->segment(1) == 'dashboard') ? 'active' : ''; ?>" href="<?php echo $base_url; ?>dashboard">
